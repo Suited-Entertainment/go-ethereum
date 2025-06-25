@@ -696,6 +696,12 @@ func (ec *Client) SendTransaction(ctx context.Context, tx *types.Transaction) er
 	return ec.c.CallContext(ctx, nil, "eth_sendRawTransaction", hexutil.Encode(data))
 }
 
+func (ec *Client) TxPoolContentFrom(ctx context.Context, account common.Address) (TxPoolResponse, error) {
+	var result TxPoolResponse
+	err := ec.c.CallContext(ctx, &result, "txpool_contentFrom", account)
+	return result, err
+}
+
 // RevertErrorData returns the 'revert reason' data of a contract call.
 //
 // This can be used with CallContract and EstimateGas, and only when the server is Geth.
